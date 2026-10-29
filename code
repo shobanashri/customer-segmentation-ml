@@ -1,0 +1,149 @@
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/README.md b/README.md[m
+[1mindex 4ff2354..4913b39 100644[m
+[1m--- a/README.md[m
+[1m+++ b/README.md[m
+[36m@@ -11,15 +11,19 @@[m [mTwo clustering algorithms are investigated:[m
+ * K-Means[m
+ * DBSCAN[m
+ [m
+[32m+[m[32mThe project includes exploratory data analysis, cluster evaluation, business interpretation, and an interactive Streamlit dashboard for exploring the resulting customer segments.[m
+[32m+[m
+ ## 2. Business Problem[m
+ [m
+ Retail businesses serve customers with different income levels and spending behaviors. Treating every customer identically may limit the effectiveness of marketing campaigns.[m
+ [m
+ Customer segmentation can help businesses understand these differences and develop more targeted marketing strategies.[m
+ [m
+[32m+[m[32mThis project explores how unsupervised learning can identify customer groups using annual income and spending score.[m
+[32m+[m
+ ## 3. Dataset[m
+ [m
+[31m-The Mall Customers dataset contains 200 customer records and five columns:[m
+[32m+[m[32mThe Mall Customers dataset contains 200 customer records and five columns.[m
+ [m
+ | Feature                | Description                           |[m
+ | ---------------------- | ------------------------------------- |[m
+[36m@@ -31,8 +35,19 @@[m [mThe Mall Customers dataset contains 200 customer records and five columns:[m
+ [m
+ The initial data-quality checks found no missing values or duplicate rows.[m
+ [m
+[32m+[m[32m### Selected Features[m
+[32m+[m
+[32m+[m[32mThe clustering models use:[m
+[32m+[m
+[32m+[m[32m* `Annual Income (k$)`[m
+[32m+[m[32m* `Spending Score (1-100)`[m
+[32m+[m
+[32m+[m[32m`CustomerID` is excluded because it is an identifier rather than a meaningful behavioral feature. Gender and age are not included in the initial clustering models.[m
+[32m+[m
+ ## 4. Methodology[m
+ [m
+[32m+[m[32mThe project follows these steps:[m
+[32m+[m
+ 1. Data understanding and quality checks[m
+ 2. Exploratory data analysis[m
+ 3. Feature selection[m
+[36m@@ -41,15 +56,7 @@[m [mThe initial data-quality checks found no missing values or duplicate rows.[m
+ 6. DBSCAN clustering[m
+ 7. Cluster visualization and evaluation[m
+ 8. Business interpretation[m
+[31m-[m
+[31m-### Selected Features[m
+[31m-[m
+[31m-The clustering models use:[m
+[31m-[m
+[31m-* `Annual Income (k$)`[m
+[31m-* `Spending Score (1-100)`[m
+[31m-[m
+[31m-CustomerID is excluded because it is an identifier rather than a meaningful behavioral feature.[m
+[32m+[m[32m9. Interactive dashboard development using Streamlit and Plotly[m
+ [m
+ ## 5. Model Results[m
+ [m
+[36m@@ -61,19 +68,23 @@[m [mThe Elbow Method was used to select five clusters.[m
+ * Silhouette Score: 0.555[m
+ * Customers segmented: 200[m
+ [m
+[32m+[m[32mK-Means produced five interpretable customer groups based on annual income and spending score.[m
+[32m+[m
+ ### DBSCAN[m
+ [m
+ An initial DBSCAN configuration was evaluated.[m
+ [m
+ * `eps`: 0.3[m
+ * `min_samples`: 5[m
+[31m-* Number of clusters: 7[m
+[32m+[m[32m* Number of clusters: 7, excluding noise[m
+ * Noise points: 35 (17.5%)[m
+ * Silhouette Score excluding noise points: approximately 0.524[m
+ [m
+[32m+[m[32mDBSCAN identified seven density-based clusters and left 35 customers unassigned to a cluster under the selected parameters. These points are labelled as noise; this does not automatically mean that they are abnormal customers.[m
+[32m+[m
+ The silhouette scores are not directly comparable because the DBSCAN score excludes noise points.[m
+ [m
+[31m-Based on the current results, K-Means is the leading candidate for the primary segmentation.[m
+[32m+[m[32mBased on the current results, K-Means is the leading candidate for the primary segmentation because it provides five interpretable groups and a higher reported silhouette score. Further evaluation should also consider cluster structure, stability, and business usefulness.[m
+ [m
+ ## 6. K-Means Customer Segments[m
+ [m
+[36m@@ -85,32 +96,55 @@[m [mBased on the current results, K-Means is the leading candidate for the primary s[m
+ | 3       |        35 |                      88.20 |                  17.11 | High Income, Low Spending        |[m
+ | 4       |        23 |                      26.30 |                  20.91 | Low Income, Low Spending         |[m
+ [m
+[32m+[m[32mThese interpretations describe the observed cluster profiles. They are useful summaries of the data, not independently verified customer categories.[m
+[32m+[m
+ ## 7. Potential Business Applications[m
+ [m
+[31m-* **Cluster 0:** Explore loyalty programs and personalized promotions.[m
+[31m-* **Cluster 1:** Test premium offers and exclusive loyalty benefits.[m
+[31m-* **Cluster 2:** Consider rewards and value-focused premium options.[m
+[31m-* **Cluster 3:** Investigate barriers to purchasing and test relevant offers.[m
+[31m-* **Cluster 4:** Explore budget-friendly products and value-focused promotions.[m
+[32m+[m[32mThe identified segments suggest several marketing strategies that could be tested.[m
+ [m
+[31m-These are potential strategies based on the observed patterns. Their effectiveness must be validated through actual campaign results.[m
+[32m+[m[32m* **Cluster 0 — Average Income, Average Spending:** Explore loyalty programs and personalized promotions.[m
+[32m+[m[32m* **Cluster 1 — High Income, High Spending:** Test premium offers and exclusive loyalty benefits.[m
+[32m+[m[32m* **Cluster 2 — Low Income, High Spending:** Consider rewards and affordable offers that encourage continued engagement.[m
+[32m+[m[32m* **Cluster 3 — High Income, Low Spending:** Investigate potential purchasing barriers and test relevant offers.[m
+[32m+[m[32m* **Cluster 4 — Low Income, Low Spending:** Explore budget-friendly products and value-focused promotions.[m
+ [m
+[31m-## 8. Limitations[m
+[32m+[m[32mThese are potential strategies based on observed patterns. Their effectiveness must be validated through actual campaign results.[m
+[32m+[m
+[32m+[m[32m## 8. Interactive Dashboard[m
+[32m+[m
+[32m+[m[32mThe project includes a Streamlit dashboard built with Plotly.[m
+[32m+[m
+[32m+[m[32mThe dashboard provides:[m
+[32m+[m
+[32m+[m[32m* Key dataset statistics[m
+[32m+[m[32m* Interactive K-Means customer segmentation scatter plot[m
+[32m+[m[32m* K-Means cluster profiles and visualizations[m
+[32m+[m[32m* Potential business insights for each K-Means segment[m
+[32m+[m[32m* DBSCAN cluster visualization and cluster counts[m
+[32m+[m[32m* Noise-point information[m
+[32m+[m[32m* Silhouette score comparison[m
+[32m+[m[32m* An option to inspect the customer data[m
+[32m+[m
+[32m+[m[32mThe dashboard helps users explore the segmentation results visually. The displayed clusters and business recommendations should be interpreted in the context of the dataset and the limitations of unsupervised learning.[m
+[32m+[m
+[32m+[m[32m## 9. Limitations[m
+ [m
+ * The dataset contains only 200 customers.[m
+ * The selected features do not capture all aspects of customer behavior.[m
+ * The clusters are algorithm-generated groups, not independently verified customer categories.[m
+[31m-* The Silhouette Score alone does not establish business usefulness.[m
+[32m+[m[32m* The silhouette score alone does not establish business usefulness.[m
+[32m+[m[32m* The K-Means and DBSCAN silhouette scores are calculated on different sets of observations, so the comparison requires caution.[m
+ * Marketing outcomes have not been tested using campaign data.[m
+ [m
+[31m-## 9. Future Improvements[m
+[32m+[m[32m## 10. Future Improvements[m
+ [m
+[31m-* Develop an interactive Streamlit dashboard.[m
+[31m-* Allow users to explore customer segments and cluster profiles.[m
+[31m-* Support segment assignment for new customers using the fitted scaler and model.[m
+[32m+[m[32m* Support segment assignment for new customers using the fitted scaler and K-Means model.[m
+[32m+[m[32m* 

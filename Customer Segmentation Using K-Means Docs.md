@@ -293,3 +293,31 @@ Return the assigned cluster.
 
 Display the segment's business interpretation.
 
+
+
+
+
+
+
+
+
+
+
+
+
+Ui 
+
+\---
+
+python -m pip install streamlit
+
+
+
+python -m streamlit --version
+
+
+
+python -m streamlit run app.py
+
+
+

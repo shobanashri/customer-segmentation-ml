@@ -11,15 +11,19 @@ Two clustering algorithms are investigated:
 * K-Means
 * DBSCAN
 
+The project includes exploratory data analysis, cluster evaluation, business interpretation, and an interactive Streamlit dashboard for exploring the resulting customer segments.
+
 ## 2. Business Problem
 
 Retail businesses serve customers with different income levels and spending behaviors. Treating every customer identically may limit the effectiveness of marketing campaigns.
 
 Customer segmentation can help businesses understand these differences and develop more targeted marketing strategies.
 
+This project explores how unsupervised learning can identify customer groups using annual income and spending score.
+
 ## 3. Dataset
 
-The Mall Customers dataset contains 200 customer records and five columns:
+The Mall Customers dataset contains 200 customer records and five columns.
 
 | Feature                | Description                           |
 | ---------------------- | ------------------------------------- |
@@ -31,7 +35,18 @@ The Mall Customers dataset contains 200 customer records and five columns:
 
 The initial data-quality checks found no missing values or duplicate rows.
 
+### Selected Features
+
+The clustering models use:
+
+* `Annual Income (k$)`
+* `Spending Score (1-100)`
+
+`CustomerID` is excluded because it is an identifier rather than a meaningful behavioral feature. Gender and age are not included in the initial clustering models.
+
 ## 4. Methodology
+
+The project follows these steps:
 
 1. Data understanding and quality checks
 2. Exploratory data analysis
@@ -41,15 +56,7 @@ The initial data-quality checks found no missing values or duplicate rows.
 6. DBSCAN clustering
 7. Cluster visualization and evaluation
 8. Business interpretation
-
-### Selected Features
-
-The clustering models use:
-
-* `Annual Income (k$)`
-* `Spending Score (1-100)`
-
-CustomerID is excluded because it is an identifier rather than a meaningful behavioral feature.
+9. Interactive dashboard development using Streamlit and Plotly
 
 ## 5. Model Results
 
@@ -61,19 +68,23 @@ The Elbow Method was used to select five clusters.
 * Silhouette Score: 0.555
 * Customers segmented: 200
 
+K-Means produced five interpretable customer groups based on annual income and spending score.
+
 ### DBSCAN
 
 An initial DBSCAN configuration was evaluated.
 
 * `eps`: 0.3
 * `min_samples`: 5
-* Number of clusters: 7
+* Number of clusters: 7, excluding noise
 * Noise points: 35 (17.5%)
 * Silhouette Score excluding noise points: approximately 0.524
 
+DBSCAN identified seven density-based clusters and left 35 customers unassigned to a cluster under the selected parameters. These points are labelled as noise; this does not automatically mean that they are abnormal customers.
+
 The silhouette scores are not directly comparable because the DBSCAN score excludes noise points.
 
-Based on the current results, K-Means is the leading candidate for the primary segmentation.
+Based on the current results, K-Means is the leading candidate for the primary segmentation because it provides five interpretable groups and a higher reported silhouette score. Further evaluation should also consider cluster structure, stability, and business usefulness.
 
 ## 6. K-Means Customer Segments
 
@@ -85,32 +96,55 @@ Based on the current results, K-Means is the leading candidate for the primary s
 | 3       |        35 |                      88.20 |                  17.11 | High Income, Low Spending        |
 | 4       |        23 |                      26.30 |                  20.91 | Low Income, Low Spending         |
 
+These interpretations describe the observed cluster profiles. They are useful summaries of the data, not independently verified customer categories.
+
 ## 7. Potential Business Applications
 
-* **Cluster 0:** Explore loyalty programs and personalized promotions.
-* **Cluster 1:** Test premium offers and exclusive loyalty benefits.
-* **Cluster 2:** Consider rewards and value-focused premium options.
-* **Cluster 3:** Investigate barriers to purchasing and test relevant offers.
-* **Cluster 4:** Explore budget-friendly products and value-focused promotions.
+The identified segments suggest several marketing strategies that could be tested.
 
-These are potential strategies based on the observed patterns. Their effectiveness must be validated through actual campaign results.
+* **Cluster 0 — Average Income, Average Spending:** Explore loyalty programs and personalized promotions.
+* **Cluster 1 — High Income, High Spending:** Test premium offers and exclusive loyalty benefits.
+* **Cluster 2 — Low Income, High Spending:** Consider rewards and affordable offers that encourage continued engagement.
+* **Cluster 3 — High Income, Low Spending:** Investigate potential purchasing barriers and test relevant offers.
+* **Cluster 4 — Low Income, Low Spending:** Explore budget-friendly products and value-focused promotions.
 
-## 8. Limitations
+These are potential strategies based on observed patterns. Their effectiveness must be validated through actual campaign results.
+
+## 8. Interactive Dashboard
+
+The project includes a Streamlit dashboard built with Plotly.
+
+The dashboard provides:
+
+* Key dataset statistics
+* Interactive K-Means customer segmentation scatter plot
+* K-Means cluster profiles and visualizations
+* Potential business insights for each K-Means segment
+* DBSCAN cluster visualization and cluster counts
+* Noise-point information
+* Silhouette score comparison
+* An option to inspect the customer data
+
+The dashboard helps users explore the segmentation results visually. The displayed clusters and business recommendations should be interpreted in the context of the dataset and the limitations of unsupervised learning.
+
+## 9. Limitations
 
 * The dataset contains only 200 customers.
 * The selected features do not capture all aspects of customer behavior.
 * The clusters are algorithm-generated groups, not independently verified customer categories.
-* The Silhouette Score alone does not establish business usefulness.
+* The silhouette score alone does not establish business usefulness.
+* The K-Means and DBSCAN silhouette scores are calculated on different sets of observations, so the comparison requires caution.
 * Marketing outcomes have not been tested using campaign data.
 
-## 9. Future Improvements
+## 10. Future Improvements
 
-* Develop an interactive Streamlit dashboard.
-* Allow users to explore customer segments and cluster profiles.
-* Support segment assignment for new customers using the fitted scaler and model.
+* Support segment assignment for new customers using the fitted scaler and K-Means model.
+* Explore DBSCAN parameter sensitivity and clustering stability.
 * Evaluate marketing outcomes when suitable business data becomes available.
+* Investigate additional customer features if reliable data becomes available.
+* Improve the dashboard with additional filtering and customer-level exploration where useful.
 
-## 10. Technologies Used
+## 11. Technologies Used
 
 * Python
 * Pandas
@@ -118,9 +152,13 @@ These are potential strategies based on the observed patterns. Their effectivene
 * Seaborn
 * Scikit-learn
 * Jupyter Notebook
+* Streamlit
+* Plotly
 
-## 11. Conclusion
+## 12. Conclusion
 
-This project explores customer segmentation using K-Means and DBSCAN. K-Means produced five interpretable groups and achieved a Silhouette Score of 0.555.
+This project explores customer segmentation using K-Means and DBSCAN. K-Means produced five interpretable customer groups and achieved a silhouette score of 0.555. DBSCAN identified seven density-based clusters and 35 noise points using the selected parameters.
 
-The results provide an initial understanding of customer income and spending patterns. Further validation and an interactive dashboard could help make these insights more accessible for business use.
+An interactive Streamlit dashboard makes the segmentation results, cluster profiles, and evaluation metrics easier to explore.
+
+The findings provide an initial understanding of customer income and spending patterns. Further validation, stability analysis, and real-world campaign testing are needed before using these segments to guide business decisions.
